@@ -6,6 +6,7 @@ from sklearn import svm
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 import pickle
+import glob
 
 def preprocess(img):
     # top, right, bottom, left
@@ -21,12 +22,14 @@ def preprocess(img):
 
 labels = os.listdir('Dataset/')
 
-model = pickle.load(open('models/svm-96.model', 'rb'))
-X_test = np.load('train_data/X_test.npy')
-y_test = np.load('train_data/y_test.npy')
+pathname = glob.glob('knn-*.model')
 
-pred = model.predict(X_test)
-print(accuracy_score(pred, y_test))
+model = pickle.load(open(pathname[0], 'rb'))
+#X_test = np.load('train_data/X_test.npy')
+#y_test = np.load('train_data/y_test.npy')
+
+#pred = model.predict(X_test)
+#print(accuracy_score(pred, y_test))
 
 img = cv2.imread('random/BillGates.jpg')
 encode, (t,r,b,l) = preprocess(img)
